@@ -6,7 +6,6 @@
 
 ---
 
-![JanSetu Banner](https://via.placeholder.com/1200x300?text=JanSetu+-+AI+for+Government+Schemes)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge"/>
