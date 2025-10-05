@@ -1,3 +1,47 @@
+"""
+main.py - Core FastAPI application module for JanSetu AI/ML services.
+
+This module wires together multiple intelligent services and exposes a unified
+HTTP API surface used by the JanSetu platform (web / IVR / other clients).
+
+Provided Capabilities (Endpoints Overview):
+    GET  /                    Simple liveness greeting
+    GET  /health              Aggregated service health metadata
+    POST /chat                RAG-backed conversational query over government schemes
+    POST /analyze-form        OCR + field extraction + contextual assistance + (optional) translation + TTS
+    POST /generate-audio      Text-to-Speech synthesis for arbitrary text
+    POST /debug/token         JWT inspection utility for debugging auth flows
+    POST /translate           Lightweight translation helper (wrapper around translator util)
+    POST /detect-hatespeech   Classical ML (TF-IDF + model) hate speech detection pipeline
+
+Integrated Service Layer Objects:
+    - OCRService            (image -> structured text/fields)
+    - TranslationService    (text -> translated text in target language)
+    - TTSService            (text -> speech audio URL)
+    - RAGService            (retrieval augmented generation over scheme knowledge base)
+
+Hate Speech Detection:
+    Loads serialized TF-IDF vectorizer + model with multiple path fallbacks.
+    Employs NLTK preprocessing (tokenization, stopword removal, stemming) with
+    graceful degradation if certain corpora are unavailable at runtime.
+
+Design & Contribution Notes:
+    - Keep heavy model initialization outside request handlers to avoid per-call overhead.
+    - Add new AI capabilities by creating a service in app/services/ and instantiating
+        it near the existing service singletons.
+    - Preserve existing JSON response contracts to avoid breaking dependent clients.
+    - Prefer raising HTTPException with precise status codes for predictable error handling.
+    - When extending hate speech or NLP pipelines, ensure deterministic preprocessing
+        so stored vectorizers remain compatible.
+    - Document any new endpoint here for quick discoverability by future contributors.
+
+Security Considerations:
+    - /debug/token is for debugging only; restrict or remove in production.
+    - CORS currently allows all origins for development; tighten before deployment.
+
+This docstring was added to improve maintainability and acknowledge contribution
+without altering the functional behavior of the service.
+"""
 # Add these imports at the top
 import pickle
 import string
