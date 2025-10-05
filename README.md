@@ -21,8 +21,6 @@ _Bridging Citizens and Government Services through Intelligent Technology_
 
 ---
 
-## Team AKAASHVANI - Koustav, Swetanjana, Vidhya, Tanishq, Shahid
-
 ## 🧩 Core Features
 
 ### 🔍 1. Intelligent Scheme Discovery
